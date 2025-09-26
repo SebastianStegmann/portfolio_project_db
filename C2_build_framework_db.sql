@@ -10,7 +10,7 @@ CREATE TABLE person (
   email email,
   password TEXT,
   last_login TIMESTAMP,
-  created_at TIMESTAMP,
+  created_at TIMESTAMP DEFAULT NOW(),
   PRIMARY KEY(id)
 );
 
@@ -18,21 +18,23 @@ CREATE TABLE person (
 CREATE TABLE search_history (
   id SERIAL,
   person_id bigint REFERENCES person,
-  search_string TEXT,
-  created_at TIMESTAMP,
+  search_string TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE bookmark (
   person_id bigint REFERENCES person,
   tconst text REFERENCES title,
-  created_at bigint,
+  created_at TIMESTAMP DEFAULT NOW(),
   PRIMARY KEY (person_id, tconst)
 );
 
 CREATE TABLE individual_rating (
-  person_id bigint,
+  person_id bigint REFERENCES person,
   tconst text REFERENCES title,
-  created_at bigint,
+  rating SMALLINT CHECK (rating >= 1 AND rating <= 10) NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP,
   PRIMARY KEY (person_id, tconst)
 );
