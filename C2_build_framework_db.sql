@@ -2,41 +2,37 @@ CREATE EXTENSION citext;
 CREATE DOMAIN email AS citext
 CHECK ( value ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$' );
 
-DROP TABLE IF EXISTS person;
 CREATE TABLE person (
-  p_id SERIAL,
+  id SERIAL,
   name VARCHAR(255),
   birthday DATE,
   location VARCHAR(2),
   email email,
   password TEXT,
   last_login TIMESTAMP,
-  created_at TIMESTAMP
+  created_at TIMESTAMP,
+  PRIMARY KEY(id)
 );
 
 
-DROP TABLE IF EXISTS search_history;
 CREATE TABLE search_history (
-  s_id SERIAL,
-  p_id bigint REFERENCES person,
+  id SERIAL,
+  person_id bigint REFERENCES person,
   search_string TEXT,
-  created_at TIMESTAMP
+  created_at TIMESTAMP,
+  PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS bookmark;
 CREATE TABLE bookmark (
-  p_id bigint REFERENCES person,
-  tconst text,
+  person_id bigint REFERENCES person,
+  tconst text REFERENCES title,
   created_at bigint,
-  PRIMARY KEY (user_id, tconst)
+  PRIMARY KEY (person_id, tconst)
 );
--- created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT TIMESTAMP 'epoch';
 
---noqa: banDropTable
-DROP TABLE IF EXISTS individual_rating;
 CREATE TABLE individual_rating (
-  u_id bigint,
-  tconst text,
+  person_id bigint,
+  tconst text REFERENCES title,
   created_at bigint,
-  PRIMARY KEY (u_id, tconst)
+  PRIMARY KEY (person_id, tconst)
 );
