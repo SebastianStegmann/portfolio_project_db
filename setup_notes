@@ -1,7 +1,0 @@
-- Downloaded 3 backup files
-
-psql -U postgres
-CREATE DATABASE xmdb;
-
-psql -U postgres -d xmdb -f $backup fil navn$
-

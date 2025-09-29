@@ -1,28 +1,13 @@
 CREATE OR REPLACE FUNCTION rate(
-    title_id CHAR(10), -- Matches title.tconst and overall_rating.tconst
-    person_id BIGINT,  -- Matches person.id and individual_rating.person_id
-    rating INTEGER     -- Compatible with individual_rating.rating (SMALLINT)
+    title_id VARCHAR(10),
+    person_id BIGINT,
+    rating INTEGER
 ) RETURNS TABLE (
     status TEXT
 ) AS $$
 DECLARE
     old_rating INTEGER;
 BEGIN
-    -- Validate title_id
-  --IF title_id IS NULL OR NOT EXISTS (
-  --    SELECT 1 FROM title WHERE tconst = title_id
-  --) THEN
-  --    RETURN QUERY SELECT 'Error: Invalid title ID';
-  --    RETURN;
-  --END IF;
-
-    -- Validate person_id (minimal)
-  --IF person_id IS NULL THEN
-  --    RETURN QUERY SELECT 'Error: Invalid user ID';
-  --    RETURN;
-  --END IF;
-
-    -- Check for existing rating
     SELECT ir.rating INTO old_rating
     FROM individual_rating ir
     WHERE ir.person_id = rate.person_id AND ir.tconst = rate.title_id;

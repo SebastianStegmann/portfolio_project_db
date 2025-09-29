@@ -80,7 +80,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION add_title_bookmark(
     p_user_id BIGINT,
-    p_tconst TEXT
+    p_tconst VARCHAR(10)
 ) RETURNS TABLE (status TEXT) AS $$
 BEGIN
         INSERT INTO bookmark (person_id, tconst, created_at)
@@ -92,7 +92,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION add_name_bookmark(
     p_user_id BIGINT,
-    p_nconst TEXT
+    p_nconst VARCHAR(10)
 ) RETURNS TABLE (status TEXT) AS $$
 BEGIN
         INSERT INTO name_bookmark (person_id, nconst, created_at)
@@ -104,12 +104,11 @@ $$ LANGUAGE plpgsql;
 
 --
 
-
 CREATE OR REPLACE FUNCTION get_user_bookmarks(
     p_user_id BIGINT
 ) RETURNS TABLE (
     type TEXT,
-    id TEXT,
+    id VARCHAR(10),
     title_or_name TEXT,
     created_at TIMESTAMP
 ) AS $$
@@ -142,7 +141,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION delete_title_bookmark(
     p_user_id BIGINT,
-    p_tconst TEXT
+    p_tconst VARCHAR(10)
 ) RETURNS TABLE (status TEXT) AS $$
 BEGIN
         DELETE FROM bookmark WHERE person_id = p_user_id AND tconst = p_tconst;
@@ -156,7 +155,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION delete_name_bookmark(
     p_user_id BIGINT,
-    p_nconst TEXT
+    p_nconst VARCHAR(10)
 ) RETURNS TABLE (status TEXT) AS $$
 BEGIN
         DELETE FROM name_bookmark WHERE person_id = p_user_id AND nconst = p_nconst;
@@ -167,6 +166,29 @@ $$ LANGUAGE plpgsql;
 
 
 
+CREATE OR REPLACE FUNCTION add_name_bookmark(
+    p_user_id BIGINT,
+    p_nconst VARCHAR(10)
+) RETURNS TABLE (status TEXT) AS $$
+BEGIN
+        INSERT INTO name_bookmark (person_id, nconst, created_at)
+        VALUES (p_user_id, p_nconst, NOW());
+        
+        RETURN QUERY SELECT 'Success: Name bookmarked' AS status;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION delete_name_bookmark(
+    p_user_id BIGINT,
+    p_nconst VARCHAR(10)
+) RETURNS TABLE (status TEXT) AS $$
+BEGIN
+        DELETE FROM name_bookmark WHERE person_id = p_user_id AND nconst = p_nconst;
+        
+        RETURN QUERY SELECT 'Success: Name bookmark removed' AS status;
+END;
+$$ LANGUAGE plpgsql;
 
 
 

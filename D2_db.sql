@@ -1,5 +1,5 @@
 CREATE OR REPLACE FUNCTION string_search(search_string text, person_id bigint)
-RETURNS TABLE(tconst char(10), primarytitle text) AS $$
+RETURNS TABLE(tconst VARCHAR(10), primarytitle TEXT) AS $$
 BEGIN
     -- Log the search
     INSERT INTO search_history(person_id, search_string, created_at)

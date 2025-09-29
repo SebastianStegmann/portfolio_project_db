@@ -25,14 +25,14 @@ CREATE TABLE search_history (
 
 CREATE TABLE bookmark (
   person_id bigint REFERENCES person,
-  tconst text REFERENCES title,
+  tconst VARCHAR(10) REFERENCES title,
   created_at TIMESTAMP DEFAULT NOW(),
   PRIMARY KEY (person_id, tconst)
 );
 
 CREATE TABLE name_bookmark (
     person_id BIGINT REFERENCES person,
-    nconst CHAR(10) REFERENCES name_basics(nconst),
+    nconst VARCHAR(10) REFERENCES name_basics(nconst),
     created_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY (person_id, nconst)
 );

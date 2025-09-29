@@ -42,3 +42,4 @@ BEGIN
     ORDER BY s.similarity DESC;
 END;
 $$ LANGUAGE plpgsql;
+

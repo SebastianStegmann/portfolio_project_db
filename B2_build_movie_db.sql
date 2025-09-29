@@ -1,26 +1,26 @@
 
 -- 1. file
-DROP TABLE IF EXISTS title_genre;
-DROP TABLE IF EXISTS name_title_role;
-DROP TABLE IF EXISTS name_profession;
--- DROP TABLE IF EXISTS title_principals;
-DROP TABLE IF EXISTS genre;
-DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS profession;
-DROP TABLE IF EXISTS new_title_episode;
-DROP TABLE IF EXISTS award;
-DROP TABLE IF EXISTS new_title_akas;
-DROP TABLE IF EXISTS overall_rating;
-DROP TABLE IF EXISTS known_for;
-DROP TABLE IF EXISTS new_title_basics;
-DROP TABLE IF EXISTS new_name_basics;
--- DROP TABLE IF EXISTS title;
+-- DROP TABLE IF EXISTS title_genre;
+-- DROP TABLE IF EXISTS name_title_role;
+-- DROP TABLE IF EXISTS name_profession;
+-- -- DROP TABLE IF EXISTS title_principals;
+-- DROP TABLE IF EXISTS genre;
+-- DROP TABLE IF EXISTS role;
+-- DROP TABLE IF EXISTS profession;
+-- DROP TABLE IF EXISTS new_title_episode;
+-- DROP TABLE IF EXISTS award;
+-- DROP TABLE IF EXISTS new_title_akas;
+-- DROP TABLE IF EXISTS overall_rating;
+-- DROP TABLE IF EXISTS known_for;
+-- DROP TABLE IF EXISTS new_title_basics;
+-- DROP TABLE IF EXISTS new_name_basics;
+-- -- DROP TABLE IF EXISTS title;
 
 -- 2. file
 -- Step 1: Create super-type table
 -- Super-type table
  CREATE TABLE title (
-    tconst CHAR(10) PRIMARY KEY,
+    tconst VARCHAR(10) PRIMARY KEY,
     title_type CHAR(1) NOT NULL,
      CONSTRAINT chk_type CHECK (title_type IN ('B', 'E'))
  );
@@ -47,7 +47,7 @@ CREATE TABLE role (
 );
 
 CREATE TABLE award (
-    tconst CHAR(10) PRIMARY KEY,
+    tconst VARCHAR(10) PRIMARY KEY,
     award_info TEXT
 );
 
@@ -57,7 +57,7 @@ CREATE TABLE genre (
 );
 
 CREATE TABLE new_title_basics (
-    tconst CHAR(10) PRIMARY KEY,
+    tconst VARCHAR(10) PRIMARY KEY,
     titletype VARCHAR(20),
     primarytitle TEXT,
     originaltitle TEXT,
@@ -72,8 +72,8 @@ CREATE TABLE new_title_basics (
 );
 
 CREATE TABLE new_title_episode (
-    tconst CHAR(10) PRIMARY KEY,
-    parenttconst CHAR(10),
+    tconst VARCHAR(10) PRIMARY KEY,
+    parenttconst VARCHAR(10),
     primarytitle TEXT,
     originaltitle TEXT,
     isadult BOOLEAN,
@@ -86,27 +86,27 @@ CREATE TABLE new_title_episode (
 );
 
 CREATE TABLE new_name_basics (
-    nconst CHAR(10) PRIMARY KEY,
+    nconst VARCHAR(10) PRIMARY KEY,
     name VARCHAR(255),
     birthyear SMALLINT,
     deathyear SMALLINT
 );
 
 CREATE TABLE title_genre (
-    tconst CHAR(10),
+    tconst VARCHAR(10),
     genre_id SMALLINT,
     PRIMARY KEY (tconst, genre_id)
 );
 
 CREATE TABLE name_title_role (
-    nconst CHAR(10),
-    tconst CHAR(10),
+    nconst VARCHAR(10),
+    tconst VARCHAR(10),
     role_id SMALLINT,
     PRIMARY KEY (nconst, tconst, role_id)
 );
 
 CREATE TABLE new_title_akas (
-    tconst CHAR(10),
+    tconst VARCHAR(10),
     ordering SMALLINT,
     title TEXT,
     region VARCHAR(10),
@@ -118,21 +118,21 @@ CREATE TABLE new_title_akas (
 );
 
 CREATE TABLE overall_rating (
-    tconst CHAR(10),
+    tconst VARCHAR(10),
     rating INTEGER,
     votes INTEGER,
     PRIMARY KEY (tconst)
 );
 
 CREATE TABLE name_profession (
-    nconst CHAR(10),
+    nconst VARCHAR(10),
     profession_id SMALLINT,
     PRIMARY KEY (nconst, profession_id)
 );
 
 CREATE TABLE known_for (
-    nconst CHAR(10),
-    tconst CHAR(10),
+    nconst VARCHAR(10),
+    tconst VARCHAR(10),
     PRIMARY KEY (nconst, tconst)
 );
 
