@@ -52,33 +52,33 @@ SELECT * FROM rate('tt0167261', 2, 6);
 
 -- D4
 SELECT tconst, primarytitle
-        FROM structured_string_search('Two Towers', NULL, NULL, NULL, 2) LIMIT 10;
+        FROM structured_string_search('Two Towers', NULL, NULL, NULL, 2);
 
 -- D5
 -- Test simple name search
-SELECT * FROM find_names('radcliffe', 2) LIMIT 10;
+SELECT * FROM find_names('radcliffe', 2);
 
 -- D6
-SELECT * FROM find_coplayers ('nm0705356', 2) LIMIT 10;
+SELECT * FROM find_coplayers ('nm0705356', 2);
 
 -- D7
 SELECT * FROM namerating('nm0705356');
 
 -- D8
-SELECT * FROM popularactors('Iron man') LIMIT 10;
-SELECT * FROM popularcoplayers('Robert Downey Jr.') LIMIT 10;
+SELECT * FROM popularactors('Iron man');
+SELECT * FROM popularcoplayers('Robert Downey Jr.');
 
 -- D9
-SELECT * FROM get_related_movies('tt0098936') LIMIT 10;
+SELECT * FROM get_related_movies('tt0098936');
 
 -- D10
-SELECT * FROM freqpersonwords('Keanu Reeves') LIMIT 10;
+SELECT * FROM freqpersonwords('Keanu Reeves');
 
 -- D11
-SELECT * FROM exactmatch('harry potter') LIMIT 10;
+SELECT * FROM exactmatch('harry potter');
 
 -- D12
-SELECT * FROM best_match_query(ARRAY['harry','wizard', 'magic', 'lego']) LIMIT 10;
+SELECT * FROM best_match_query(ARRAY['harry','wizard', 'magic', 'lego']);
 
 -- D13
 SELECT * FROM word_to_words_query(ARRAY['harry', 'potter', 'wand', 'magic']) LIMIT 10;

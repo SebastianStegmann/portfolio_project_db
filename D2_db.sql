@@ -17,7 +17,6 @@ BEGIN
     SELECT te.tconst, te.primarytitle
     FROM title_episode te
     WHERE te.primarytitle ILIKE '%' || search_string || '%' --ILIKE er for at gøre case insensitive
-       OR te.plot ILIKE '%' || search_string || '%'
-    LIMIT 10;
+       OR te.plot ILIKE '%' || search_string || '%';
 END;
 $$ LANGUAGE plpgsql;

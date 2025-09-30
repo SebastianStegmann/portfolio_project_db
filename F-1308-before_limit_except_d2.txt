@@ -14,7 +14,7 @@ SELECT * FROM register_user(
  Success: User registered |       1
 (1 row)
 
-Time: 14.773 ms
+Time: 29.640 ms
 SELECT * FROM register_user(
   'Johanne',
   '2004-11-09',
@@ -27,7 +27,7 @@ SELECT * FROM register_user(
  Success: User registered |       2
 (1 row)
 
-Time: 0.580 ms
+Time: 0.676 ms
 -- Update user
 SELECT * FROM update_user(1, 'Karlos', '2001-11-14', 'DA', 'karl@karlmail.dk');
         status         
@@ -35,7 +35,7 @@ SELECT * FROM update_user(1, 'Karlos', '2001-11-14', 'DA', 'karl@karlmail.dk');
  Success: User updated
 (1 row)
 
-Time: 1.760 ms
+Time: 3.756 ms
 -- Delete user
 SELECT * FROM delete_user(1);
         status         
@@ -43,7 +43,7 @@ SELECT * FROM delete_user(1);
  Success: User deleted
 (1 row)
 
-Time: 4.688 ms
+Time: 4.849 ms
 -- Add title bookmark
 SELECT * FROM add_title_bookmark(2,'tt0167261');
           status           
@@ -51,14 +51,14 @@ SELECT * FROM add_title_bookmark(2,'tt0167261');
  Success: Title bookmarked
 (1 row)
 
-Time: 3.166 ms
+Time: 2.422 ms
 SELECT * FROM add_title_bookmark(2,'tt0167260');
           status           
 ---------------------------
  Success: Title bookmarked
 (1 row)
 
-Time: 0.599 ms
+Time: 0.845 ms
 -- Add name bookmark
 SELECT * FROM add_name_bookmark(2, 'nm0705356');
           status          
@@ -66,17 +66,17 @@ SELECT * FROM add_name_bookmark(2, 'nm0705356');
  Success: Name bookmarked
 (1 row)
 
-Time: 2.106 ms
+Time: 2.134 ms
 -- Get users bookmarks -- before delete
 SELECT * FROM get_user_bookmarks(2);
  type  |    id     |                 title_or_name                 |         created_at         
 -------+-----------+-----------------------------------------------+----------------------------
- Name  | nm0705356 | Daniel Radcliffe                              | 2025-09-30 13:47:09.997229
- Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-30 13:47:09.9966
- Title | tt0167261 | The Lord of the Rings: The Two Towers         | 2025-09-30 13:47:09.993369
+ Name  | nm0705356 | Daniel Radcliffe                              | 2025-09-30 12:59:39.536834
+ Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-30 12:59:39.535926
+ Title | tt0167261 | The Lord of the Rings: The Two Towers         | 2025-09-30 12:59:39.533479
 (3 rows)
 
-Time: 3.523 ms
+Time: 2.549 ms
 -- Delete title bookmark
 SELECT * FROM delete_title_bookmark(2, 'tt0167261');
              status              
@@ -84,7 +84,7 @@ SELECT * FROM delete_title_bookmark(2, 'tt0167261');
  Success: Title bookmark removed
 (1 row)
 
-Time: 0.489 ms
+Time: 0.280 ms
 -- Delete name bookmark
 SELECT * FROM delete_name_bookmark(2,'nm0705356');
              status             
@@ -92,15 +92,15 @@ SELECT * FROM delete_name_bookmark(2,'nm0705356');
  Success: Name bookmark removed
 (1 row)
 
-Time: 0.315 ms
+Time: 0.150 ms
 -- Get users bookmarks -- after delete
 SELECT * FROM get_user_bookmarks(2);
- type  |    id     |                 title_or_name                 |        created_at        
--------+-----------+-----------------------------------------------+--------------------------
- Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-30 13:47:09.9966
+ type  |    id     |                 title_or_name                 |         created_at         
+-------+-----------+-----------------------------------------------+----------------------------
+ Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-30 12:59:39.535926
 (1 row)
 
-Time: 0.601 ms
+Time: 0.192 ms
 -- D2
 SELECT string_search('Lord', 2) LIMIT 10;
                         string_search                        
@@ -117,7 +117,7 @@ SELECT string_search('Lord', 2) LIMIT 10;
  (tt0399295,"Lord of War")
 (10 rows)
 
-Time: 162.754 ms
+Time: 110.025 ms
 -- D3
 SELECT * FROM rate('tt0167261', 2, 5);
  status  
@@ -125,59 +125,59 @@ SELECT * FROM rate('tt0167261', 2, 5);
  Success
 (1 row)
 
-Time: 2.074 ms
+Time: 2.988 ms
 SELECT * FROM rate('tt0167261', 2, 6);
  status  
 ---------
  Success
 (1 row)
 
-Time: 0.248 ms
+Time: 0.314 ms
 -- D4
 SELECT tconst, primarytitle
-        FROM structured_string_search('Two Towers', NULL, NULL, NULL, 2);
+        FROM structured_string_search('Two Towers', NULL, NULL, NULL, 2) LIMIT 10;
    tconst   |             primarytitle              
 ------------+---------------------------------------
  tt0167261  | The Lord of the Rings: The Two Towers
  tt21822288 | The Lord of the Rings: The Two Towers
 (2 rows)
 
-Time: 126.735 ms
+Time: 224.210 ms
 -- D5
 -- Test simple name search
-SELECT * FROM find_names('radcliffe', 2);
+SELECT * FROM find_names('radcliffe', 2) LIMIT 10;
    nconst   |       primaryname       
 ------------+-------------------------
+ nm17179944 | Dominic Bruce-Radcliffe
+ nm1034207  | Mark Radcliffe
+ nm9530890  | Kailey Radcliffe
+ nm0705356  | Daniel Radcliffe
  nm0705365  | Mark Radcliffe
  nm7156709  | Gareth Radcliffe
  nm15172656 | Tibby Radcliffe
  nm7709736  | Wil Radcliffe
  nm1705746  | Paula Radcliffe
- nm17179944 | Dominic Bruce-Radcliffe
- nm0705356  | Daniel Radcliffe
- nm1034207  | Mark Radcliffe
  nm0705377  | Tat Radcliffe
- nm9530890  | Kailey Radcliffe
 (10 rows)
 
-Time: 52.005 ms
+Time: 30.224 ms
 -- D6
-SELECT * FROM find_coplayers ('nm0705356', 2);
+SELECT * FROM find_coplayers ('nm0705356', 2) LIMIT 10;
   nconst   |     name      | freq 
 -----------+---------------+------
  nm0746830 | J.K. Rowling  |    8
- nm0914612 | Emma Watson   |    7
  nm0382268 | David Heyman  |    7
  nm0342488 | Rupert Grint  |    7
+ nm0914612 | Emma Watson   |    7
  nm0460141 | Steve Kloves  |    5
  nm0186023 | Stuart Craig  |    5
- nm0918587 | Fiona Weir    |    4
  nm0057655 | David Barron  |    4
+ nm0918587 | Fiona Weir    |    4
+ nm0206504 | Mark Day      |    3
  nm0001116 | Warwick Davis |    3
- nm0000614 | Alan Rickman  |    3
 (10 rows)
 
-Time: 166.869 ms
+Time: 323.121 ms
 -- D7
 SELECT * FROM namerating('nm0705356');
   nconst   |       name       | name_rating 
@@ -185,9 +185,9 @@ SELECT * FROM namerating('nm0705356');
  nm0705356 | Daniel Radcliffe |         7.8
 (1 row)
 
-Time: 118.982 ms
+Time: 158.040 ms
 -- D8
-SELECT * FROM popularactors('Iron man');
+SELECT * FROM popularactors('Iron man') LIMIT 10;
   nconst   |       name        | name_rating 
 -----------+-------------------+-------------
  nm1014697 | Ramin Djawadi     |         8.3
@@ -202,42 +202,42 @@ SELECT * FROM popularactors('Iron man');
  nm0000569 | Gwyneth Paltrow   |         7.9
 (10 rows)
 
-Time: 57.079 ms
-SELECT * FROM popularcoplayers('Robert Downey Jr.');
+Time: 55.578 ms
+SELECT * FROM popularcoplayers('Robert Downey Jr.') LIMIT 10;
   nconst   |       name        | name_rating 
 -----------+-------------------+-------------
  nm0342241 | Scott Grimes      |         8.7
  nm0614165 | Cillian Murphy    |         8.7
- nm6318137 | Patrick Cotnoir   |         8.6
- nm0746273 | Charles Roven     |         8.6
- nm0634240 | Christopher Nolan |         8.6
- nm0195669 | Louis D'Esposito  |         8.6
  nm0858799 | Emma Thomas       |         8.6
+ nm0634240 | Christopher Nolan |         8.6
+ nm6318137 | Patrick Cotnoir   |         8.6
+ nm0195669 | Louis D'Esposito  |         8.6
  nm0660667 | John Papsidera    |         8.6
+ nm0746273 | Charles Roven     |         8.6
  nm0004802 | Linda Cardellini  |         8.5
- nm0463282 | Kurt Koehler      |         8.3
+ nm0748620 | Paul Rudd         |         8.3
 (10 rows)
 
-Time: 404.617 ms
+Time: 301.234 ms
 -- D9
-SELECT * FROM get_related_movies('tt0098936');
-  tconst   | similarity 
------------+------------
- tt0452623 |          1
- tt0734814 |          1
- tt0342012 |          1
- tt0443706 |          1
- tt0278784 |          1
- tt0454848 |          1
- tt0327056 |          1
- tt0338564 |          1
- tt0353969 |          1
- tt0734815 |          1
+SELECT * FROM get_related_movies('tt0098936') LIMIT 10;
+   tconst   | similarity 
+------------+------------
+ tt18312254 |          1
+ tt18312250 |          1
+ tt18312248 |          1
+ tt18312246 |          1
+ tt18312242 |          1
+ tt18312240 |          1
+ tt18312238 |          1
+ tt18312236 |          1
+ tt18312234 |          1
+ tt18312232 |          1
 (10 rows)
 
-Time: 499.312 ms
+Time: 515.295 ms
 -- D10
-SELECT * FROM freqpersonwords('Keanu Reeves');
+SELECT * FROM freqpersonwords('Keanu Reeves') LIMIT 10;
     word     | freq 
 -------------+------
  reeves      |   23
@@ -245,16 +245,16 @@ SELECT * FROM freqpersonwords('Keanu Reeves');
  side        |   21
  self        |   16
  bill        |   12
+ justin      |   11
  chris       |   11
+ kenneally   |   11
  christopher |   11
  cassidy     |   11
- brendan     |   11
- justin      |   11
 (10 rows)
 
-Time: 79.272 ms
+Time: 79.670 ms
 -- D11
-SELECT * FROM exactmatch('harry potter');
+SELECT * FROM exactmatch('harry potter') LIMIT 10;
                         primarytitle                         
 -------------------------------------------------------------
  Harry Potter and the Prisoner of Azkaban
@@ -269,24 +269,24 @@ SELECT * FROM exactmatch('harry potter');
  Creating the World of Harry Potter, Part 4: Sound and Music
 (10 rows)
 
-Time: 86.308 ms
+Time: 173.573 ms
 -- D12
-SELECT * FROM best_match_query(ARRAY['harry','wizard', 'magic', 'lego']);
-   tconst   |                        primarytitle                        | match_count 
-------------+------------------------------------------------------------+-------------
- tt14149634 | Lego Harry Potter and the Philosopher's Stone              |           4
- tt0330373  | Harry Potter and the Goblet of Fire                        |           3
- tt1312180  | The Wizard Rockumentary: A Movie About Rocking and Rowling |           3
- tt3497188  | Night Light                                                |           3
- tt0926084  | Harry Potter and the Deathly Hallows: Part 1               |           3
- tt0304141  | Harry Potter and the Prisoner of Azkaban                   |           2
- tt13107970 | Hogwarts Legacy                                            |           2
- tt1161421  | Harvey Putter and the Ridiculous Premise                   |           2
- tt1201607  | Harry Potter and the Deathly Hallows: Part 2               |           2
- tt0876563  | Ponyo                                                      |           2
+SELECT * FROM best_match_query(ARRAY['harry','wizard', 'magic', 'lego']) LIMIT 10;
+   tconst   |                          primarytitle                           | match_count 
+------------+-----------------------------------------------------------------+-------------
+ tt14149634 | Lego Harry Potter and the Philosopher's Stone                   |           4
+ tt3497188  | Night Light                                                     |           3
+ tt1312180  | The Wizard Rockumentary: A Movie About Rocking and Rowling      |           3
+ tt0926084  | Harry Potter and the Deathly Hallows: Part 1                    |           3
+ tt0330373  | Harry Potter and the Goblet of Fire                             |           3
+ tt1347273  | Mellodrama                                                      |           2
+ tt13243836 | Cherry Magic! Thirty Years of Virginity Can Make You a Wizard?! |           2
+ tt1161421  | Harvey Putter and the Ridiculous Premise                        |           2
+ tt13107970 | Hogwarts Legacy                                                 |           2
+ tt7451864  | Magic Dream                                                     |           2
 (10 rows)
 
-Time: 89.186 ms
+Time: 102.005 ms
 -- D13
 SELECT * FROM word_to_words_query(ARRAY['harry', 'potter', 'wand', 'magic']) LIMIT 10;
   word   | frequency 
@@ -303,4 +303,4 @@ SELECT * FROM word_to_words_query(ARRAY['harry', 'potter', 'wand', 'magic']) LIM
  one     |       249
 (10 rows)
 
-Time: 665.378 ms
+Time: 368.656 ms

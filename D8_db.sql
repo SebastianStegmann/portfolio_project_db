@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION popularactors(s_primarytitle VARCHAR(255))
+CREATE OR REPLACE FUNCTION popularactors(s_primarytitle VARCHAR(255), limit_count int DEFAULT 10)
   
   RETURNS TABLE(
   nconst VARCHAR(10),
@@ -14,13 +14,14 @@ CREATE OR REPLACE FUNCTION popularactors(s_primarytitle VARCHAR(255))
       JOIN name_basics nb ON nb.nconst = tp.nconst
       JOIN title_basics tb ON tb.tconst = tp.tconst
    WHERE tb.primarytitle ilike s_primarytitle
-   ORDER BY nb.name_rating DESC NULLS LAST;
+   ORDER BY nb.name_rating DESC NULLS LAST
+   LIMIT limit_count;
  
   END;
 $$ LANGUAGE plpgsql;
 
  
-CREATE OR REPLACE FUNCTION popularcoplayers(s_name VARCHAR(255))
+CREATE OR REPLACE FUNCTION popularcoplayers(s_name VARCHAR(255), limit_count int DEFAULT 10)
   RETURNS TABLE(nconst VARCHAR(10), name VARCHAR(255), name_rating NUMERIC(3,1)) AS $$
 BEGIN
   RETURN QUERY
@@ -43,11 +44,10 @@ BEGIN
       WHERE n.name ILIKE '%' || s_name || '%'
     )
   GROUP BY nb.nconst, nb.name, nb.name_rating
-  ORDER BY nb.name_rating DESC NULLS LAST;
+  ORDER BY nb.name_rating DESC NULLS LAST
+  LIMIT limit_count;
 END;
 $$ LANGUAGE plpgsql;
-
-
 
 
 

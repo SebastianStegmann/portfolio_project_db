@@ -3,7 +3,8 @@ CREATE OR REPLACE FUNCTION structured_string_search(
     plot_text TEXT,
     character_text TEXT,
     person_text TEXT,
-    p_id BIGINT
+    p_id BIGINT,
+    limit_count int DEFAULT 10
 ) RETURNS TABLE (
     tconst VARCHAR(10),
     primarytitle TEXT
@@ -30,6 +31,8 @@ BEGIN
     WHERE (title_text IS NULL OR tb.primarytitle ILIKE '%' || title_text || '%')
       AND (plot_text IS NULL OR tb.plot ILIKE '%' || plot_text || '%')
       AND (character_text IS NULL OR tp.characters ILIKE '%' || character_text || '%')
-      AND (person_text IS NULL OR nb.name ILIKE '%' || person_text || '%');
+      AND (person_text IS NULL OR nb.name ILIKE '%' || person_text || '%')
+    LIMIT limit_count;
 END;
 $$ LANGUAGE plpgsql;
+

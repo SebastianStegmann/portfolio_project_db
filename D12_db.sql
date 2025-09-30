@@ -1,5 +1,6 @@
 CREATE OR REPLACE FUNCTION best_match_query(
-    keywords text[]
+    keywords text[],
+    limit_count INT DEFAULT 10 
 )
 RETURNS TABLE (
     tconst text,
@@ -17,7 +18,8 @@ BEGIN
     WHERE LOWER(tb.primarytitle) LIKE '%' || LOWER(kw.keyword) || '%'
        OR LOWER(tb.plot)         LIKE '%' || LOWER(kw.keyword) || '%'
     GROUP BY tb.tconst, tb.primarytitle
-    ORDER BY match_count DESC;
+    ORDER BY match_count DESC
+    LIMIT limit_count;
 END;
 $$ LANGUAGE plpgsql;
 

@@ -4,7 +4,7 @@
 
 #let date = [30 September 2025];
 
-#let names = [SOFIE WINDELØV\ NIKOLAJ KRING\ SEBASTIAN STEGMANN];
+#let names = [SOFIE NYBRO JOHANSSON WINDELØV\ NIKOLAJ DITMAR KRING\ SEBASTIAN BILLE STEGMANN];
 
 #set page(header: context {
   if counter(page).get().first() > 1 [
@@ -15,7 +15,6 @@
 }
 
 )
-
 
 
 #set text(weight: 700);

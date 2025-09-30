@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_related_movies(input_tconst VARCHAR(10))
+CREATE OR REPLACE FUNCTION get_related_movies(input_tconst VARCHAR(10), limit_count INT DEFAULT 10)
 RETURNS TABLE (tconst VARCHAR(10), similarity FLOAT) AS $$
 BEGIN
     RETURN QUERY
@@ -39,7 +39,8 @@ BEGIN
     SELECT s.tconst, s.similarity
     FROM similarities s
     WHERE s.similarity > 0
-    ORDER BY s.similarity DESC;
+    ORDER BY s.similarity DESC
+    LIMIT 10;
 END;
 $$ LANGUAGE plpgsql;
 

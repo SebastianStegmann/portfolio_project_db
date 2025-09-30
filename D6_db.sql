@@ -1,4 +1,4 @@
-CREATE OR replace FUNCTION find_coplayers(input_nconst VARCHAR(10), p_id BIGINT)
+CREATE OR replace FUNCTION find_coplayers(input_nconst VARCHAR(10), p_id BIGINT, limit_count int DEFAULT 10)
 RETURNS TABLE(nconst VARCHAR(10), name VARCHAR(255), freq INT) as $$
  
 BEGIN
@@ -23,7 +23,8 @@ INSERT INTO search_history(person_id, search_string, created_at)
    WHERE tp2.tconst in (SELECT tconst FROM actor_titles)
    AND tp2.nconst <> input_nconst
    GROUP BY nb.nconst, nb.name
-   ORDER BY freq DESC;
+   ORDER BY freq DESC
+   LIMIT limit_count;
  
 END;
 $$
