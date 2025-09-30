@@ -1,66 +1,90 @@
 #import "@preview/modern-iu-thesis:0.1.2": *
 
-#let title = [Subproject 1: Database];
+#let title = [SUBPROJECT 1: DATABASE];
 
 #let date = [30 September 2025];
 
-#let names = [Sofie Windeløv\ Nikolaj Kring\ Sebastian Stegmann];
+#let names = [SOFIE WINDELØV\ NIKOLAJ KRING\ SEBASTIAN STEGMANN];
 
 #set page(header: context {
   if counter(page).get().first() > 1 [
-    _Lisa Strassner's Thesis_
+    Subproject 1: Database
     #h(1fr)
-    National Academy of Sciences
+    Roskilde University
   ]
 }
 
 )
 
-#set page(numbering: "(i)");
-#counter(page).update(1);
-#set page(numbering: "1");
 
+
+#set text(weight: 700);
 #align(center)[
+  #v(140pt)
+  #set text(18pt)
   #title
+  #v(150pt)
+  #set text(12pt)
+  by \
+  \ 
   #names
 
+  #v(200pt)
+  Roskilde University \
+  Computer Science Msc \
+  \
   #date
+
 ];
+
+#set text(weight: 400);
 
 
 #align(center)[]
 
 #pagebreak();
 
+#outline()
+
+#set heading(numbering: "1.A.1")
+
+#set page(numbering: "1");
+#counter(page).update(1)
+
 = Introduction
 
 #lorem(100)
 
-== History
+== Application Design
 
-#lorem(100)
+==  The Movie Data Model
 
-#align(center)[
-  #figure(emoji.explosion, caption: [Kapow!])
-]
+=== Data Model
+=== Implementation
 
-#lorem(200)
 
-#iuquote([#lorem(50)])
+==  Framework Model
 
-=== More History
+=== Data Model
+=== Implementation
 
-$ delta S & = delta integral cal(L) dif t = 0 $
 
-#align(center)[
-  #figure(
-    table(
-      columns: 3,
-      table.header([], [*Thing 1*], [*Thing 2*]),
-      [Experiment 1], [1.0], [2.0],
-      [Experiment 2], [3.0], [4.0],
-    ),
-    caption: [My table],
-  )
-]
+==  Functionality
 
+=== Basic Framework Functionality
+=== Simple Search
+=== Title Rating
+=== Structured String Search
+=== Finding Names
+=== Finding Co-players
+=== Name Rating
+=== Popular actors
+=== Similar Movies
+=== Frequent Person Words
+=== Exact-match Querying
+=== Best-match Querying
+==  Word-to-words Querying
+
+== Improving performance by indexing
+
+== Testing using the IMDB database

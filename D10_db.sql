@@ -1,16 +1,16 @@
 CREATE OR REPLACE FUNCTION freqpersonwords(s_name TEXT)
   RETURNS TABLE(word TEXT, freq int) AS $$
  
-  begin
-  return query
+  BEGIN
+  RETURN query
  
-  select w.word, count(*)::int as freq
-  from name_basics nb
-      join title_principals tp on nb.nconst = tp.nconst
-      join wi w on w.tconst = tp.tconst
-   where nb.name ilike '%' || s_name || '%'
-   group by w.word
-   order by freq DESC;
+  SELECT w.word, COUNT(*)::INT AS freq
+  FROM name_basics nb
+      JOIN title_principals tp ON nb.nconst = tp.nconst
+      JOIN wi w ON w.tconst = tp.tconst
+   WHERE nb.name ilike '%' || s_name || '%'
+   GROUP BY w.word
+   ORDER BY freq DESC;
  
   END;
 $$ LANGUAGE plpgsql;

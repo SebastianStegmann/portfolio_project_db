@@ -1,3 +1,4 @@
+\timing
 -- D1 
 -- Register user
 SELECT * FROM register_user(
@@ -71,8 +72,7 @@ SELECT * FROM popularcoplayers('Robert Downey Jr.') LIMIT 10;
 SELECT * FROM get_related_movies('tt0098936') LIMIT 10;
 
 -- D10
-SELECT * FROM freqpersonwords('Keanu Reeves')
-LIMIT 10;
+SELECT * FROM freqpersonwords('Keanu Reeves') LIMIT 10;
 
 -- D11
 SELECT * FROM exactmatch('harry potter') LIMIT 10;

@@ -20,8 +20,8 @@ psql -U postgres -d imdb -f D6_db.sql
 psql -U postgres -d imdb -f D7_db.sql
 psql -U postgres -d imdb -f D7_seed_after.sql
 psql -U postgres -d imdb -f D8_db.sql
-
 psql -U postgres -d imdb -f D9_db.sql
+psql -U postgres -d imdb -f D10_db.sql
 psql -U postgres -d imdb -f D11_db.sql
 psql -U postgres -d imdb -f D12_db.sql
 psql -U postgres -d imdb -f D13_db.sql

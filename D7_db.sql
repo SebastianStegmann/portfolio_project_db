@@ -1,6 +1,15 @@
 ALTER TABLE name_basics
    ADD COLUMN IF NOT EXISTS name_rating NUMERIC(3,1);
 
+--
+CREATE INDEX idx_name_basics_rating
+  ON name_basics (name_rating);
+
+CREATE INDEX idx_name_basics_name_lower
+  ON name_basics (LOWER(name));
+--
+
+
 CREATE OR REPLACE FUNCTION namerating(input_nconst VARCHAR(10))
   RETURNS TABLE(nconst VARCHAR(10), name VARCHAR(255), name_rating NUMERIC(3,1)) AS $$
 DECLARE

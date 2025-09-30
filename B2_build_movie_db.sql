@@ -350,6 +350,8 @@ SET
 -- Step 6: Add FK constraints
 ALTER TABLE new_title_basics
     ADD CONSTRAINT fk_basics_title FOREIGN KEY (tconst) REFERENCES title(tconst) DEFERRABLE INITIALLY DEFERRED;
+    CREATE INDEX idx_title_primarytitle_lower ON title_basics (LOWER(primarytitle));
+
 
 ALTER TABLE new_title_episode
     ADD CONSTRAINT fk_episode_title FOREIGN KEY (tconst) REFERENCES title(tconst) DEFERRABLE INITIALLY DEFERRED,
@@ -391,6 +393,14 @@ ALTER TABLE new_title_akas
 ALTER TABLE title_principals
 ADD CONSTRAINT title_princials_tconst FOREIGN KEY (tconst) REFERENCES title(tconst),
 ADD CONSTRAINT title_principals_nconst FOREIGN KEY (nconst) REFERENCES new_name_basics(nconst);
+
+
+CREATE INDEX idx_wi_tconst
+  ON wi (tconst);
+
+CREATE INDEX idx_wi_word_lower
+  ON wi (LOWER(word));
+
 
 -- 16. file
 
