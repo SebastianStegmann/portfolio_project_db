@@ -1,5 +1,5 @@
-CREATE OR REPLACE FUNCTION get_related_movies(input_tconst CHAR(10))
-RETURNS TABLE (tconst CHAR(10), similarity FLOAT) AS $$
+CREATE OR REPLACE FUNCTION get_related_movies(input_tconst VARCHAR(10))
+RETURNS TABLE (tconst VARCHAR(10), similarity FLOAT) AS $$
 BEGIN
     RETURN QUERY
     WITH input_genres AS (

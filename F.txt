@@ -1,0 +1,263 @@
+-- D1 
+-- Register user
+SELECT * FROM register_user(
+  'Karl',
+  '2001-11-14',
+  'DA',
+  'karl@karlmail.dk',
+  'password'
+);
+          status          | user_id 
+--------------------------+---------
+ Success: User registered |       1
+(1 row)
+
+SELECT * FROM register_user(
+  'Johanne',
+  '2004-11-09',
+  'DA',
+  'johanne@karlmail.dk',
+  'password'
+);
+          status          | user_id 
+--------------------------+---------
+ Success: User registered |       2
+(1 row)
+
+-- Update user
+SELECT * FROM update_user(1, 'Karlos', '2001-11-14', 'DA', 'karl@karlmail.dk');
+        status         
+-----------------------
+ Success: User updated
+(1 row)
+
+-- Delete user
+SELECT * FROM delete_user(1);
+        status         
+-----------------------
+ Success: User deleted
+(1 row)
+
+-- Add title bookmark
+SELECT * FROM add_title_bookmark(2,'tt0167261');
+          status           
+---------------------------
+ Success: Title bookmarked
+(1 row)
+
+SELECT * FROM add_title_bookmark(2,'tt0167260');
+          status           
+---------------------------
+ Success: Title bookmarked
+(1 row)
+
+-- Add name bookmark
+SELECT * FROM add_name_bookmark(2, 'nm0705356');
+          status          
+--------------------------
+ Success: Name bookmarked
+(1 row)
+
+-- Get users bookmarks -- before delete
+SELECT * FROM get_user_bookmarks(2);
+ type  |    id     |                 title_or_name                 |         created_at         
+-------+-----------+-----------------------------------------------+----------------------------
+ Name  | nm0705356 | Daniel Radcliffe                              | 2025-09-29 22:02:10.917283
+ Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-29 22:02:10.916312
+ Title | tt0167261 | The Lord of the Rings: The Two Towers         | 2025-09-29 22:02:10.909527
+(3 rows)
+
+-- Delete title bookmark
+SELECT * FROM delete_title_bookmark(2, 'tt0167261');
+             status              
+---------------------------------
+ Success: Title bookmark removed
+(1 row)
+
+-- Delete name bookmark
+SELECT * FROM delete_name_bookmark(2,'nm0705356');
+             status             
+--------------------------------
+ Success: Name bookmark removed
+(1 row)
+
+-- Get users bookmarks -- after delete
+SELECT * FROM get_user_bookmarks(2);
+ type  |    id     |                 title_or_name                 |         created_at         
+-------+-----------+-----------------------------------------------+----------------------------
+ Title | tt0167260 | The Lord of the Rings: The Return of the King | 2025-09-29 22:02:10.916312
+(1 row)
+
+-- D2
+SELECT string_search('Lord', 2) LIMIT 10;
+                        string_search                        
+-------------------------------------------------------------
+ (tt0167260,"The Lord of the Rings: The Return of the King")
+ (tt0167261,"The Lord of the Rings: The Two Towers")
+ (tt0268093,Ramayan)
+ (tt0304141,"Harry Potter and the Prisoner of Azkaban")
+ (tt0330373,"Harry Potter and the Goblet of Fire")
+ (tt0368081,"Calixto the Landlord")
+ (tt0373074,"Kung Fu Hustle")
+ (tt0376076,Pithamagan)
+ (tt0397455,"Hiphopbattle.com: Detroit vs. Cleveland")
+ (tt0399295,"Lord of War")
+(10 rows)
+
+-- D3
+SELECT * FROM rate('tt0167261', 2, 5);
+ status  
+---------
+ Success
+(1 row)
+
+SELECT * FROM rate('tt0167261', 2, 6);
+ status  
+---------
+ Success
+(1 row)
+
+-- D4
+SELECT tconst, primarytitle
+        FROM structured_string_search('Two Towers', NULL, NULL, NULL, 2) LIMIT 10;
+   tconst   |             primarytitle              
+------------+---------------------------------------
+ tt0167261  | The Lord of the Rings: The Two Towers
+ tt21822288 | The Lord of the Rings: The Two Towers
+(2 rows)
+
+-- D5
+-- Test simple name search
+SELECT * FROM find_names('radcliffe', 2) LIMIT 10;
+   nconst   |       primaryname       
+------------+-------------------------
+ nm0705365  | Mark Radcliffe
+ nm17179944 | Dominic Bruce-Radcliffe
+ nm0705378  | Tom Radcliffe
+ nm15172656 | Tibby Radcliffe
+ nm7709736  | Wil Radcliffe
+ nm1705746  | Paula Radcliffe
+ nm13572369 | Gavin Radcliffe
+ nm7156709  | Gareth Radcliffe
+ nm0705356  | Daniel Radcliffe
+ nm1034207  | Mark Radcliffe
+(10 rows)
+
+-- D6
+SELECT * FROM find_coplayers ('nm0705356', 2) LIMIT 10;
+  nconst   |     name      | freq 
+-----------+---------------+------
+ nm0746830 | J.K. Rowling  |    8
+ nm0382268 | David Heyman  |    7
+ nm0342488 | Rupert Grint  |    7
+ nm0914612 | Emma Watson   |    7
+ nm0460141 | Steve Kloves  |    5
+ nm0186023 | Stuart Craig  |    5
+ nm0057655 | David Barron  |    4
+ nm0918587 | Fiona Weir    |    4
+ nm0206504 | Mark Day      |    3
+ nm0001116 | Warwick Davis |    3
+(10 rows)
+
+-- D7
+SELECT * FROM namerating('nm0705356');
+  nconst   |       name       | name_rating 
+-----------+------------------+-------------
+ nm0705356 | Daniel Radcliffe |         7.8
+(1 row)
+
+-- D8
+SELECT * FROM popularactors('Iron man') LIMIT 10;
+  nconst   |       name        | name_rating 
+-----------+-------------------+-------------
+ nm1014697 | Ramin Djawadi     |         8.3
+ nm0728951 | J. Michael Riva   |         8.2
+ nm0032696 | Avi Arad          |         8.2
+ nm0269463 | Jon Favreau       |         8.1
+ nm0000375 | Robert Downey Jr. |         8.1
+ nm0270559 | Kevin Feige       |         8.0
+ nm0278168 | Sarah Finn        |         8.0
+ nm0005024 | Terrence Howard   |         8.0
+ nm0046223 | Sayed Badreya     |         8.0
+ nm0000569 | Gwyneth Paltrow   |         7.9
+(10 rows)
+
+SELECT * FROM popularcoplayers('Robert Downey Jr.') LIMIT 10;
+  nconst   |       name        | name_rating 
+-----------+-------------------+-------------
+ nm0342241 | Scott Grimes      |         8.7
+ nm0614165 | Cillian Murphy    |         8.7
+ nm0858799 | Emma Thomas       |         8.6
+ nm0634240 | Christopher Nolan |         8.6
+ nm6318137 | Patrick Cotnoir   |         8.6
+ nm0195669 | Louis D'Esposito  |         8.6
+ nm0660667 | John Papsidera    |         8.6
+ nm0746273 | Charles Roven     |         8.6
+ nm0004802 | Linda Cardellini  |         8.5
+ nm0748620 | Paul Rudd         |         8.3
+(10 rows)
+
+-- D9
+SELECT * FROM get_related_movies('tt0098936') LIMIT 10;
+   tconst   | similarity 
+------------+------------
+ tt18312254 |          1
+ tt18312250 |          1
+ tt18312248 |          1
+ tt18312246 |          1
+ tt18312242 |          1
+ tt18312240 |          1
+ tt18312238 |          1
+ tt18312236 |          1
+ tt18312234 |          1
+ tt18312232 |          1
+(10 rows)
+
+-- D11
+SELECT * FROM exactmatch('harry potter') LIMIT 10;
+                        primarytitle                         
+-------------------------------------------------------------
+ Harry Potter and the Prisoner of Azkaban
+ Harry Potter and the Goblet of Fire
+ Harry Potter and the Half-Blood Prince
+ Harry Potter and the Deathly Hallows: Part 1
+ Who Is James Payton?
+ The Last Follower and the Resurrection of Voldemort
+ Harry Potter and the Deathly Hallows: Part 2
+ The Wizard Rockumentary: A Movie About Rocking and Rowling
+ Lego Harry Potter and the Philosopher's Stone
+ Creating the World of Harry Potter, Part 4: Sound and Music
+(10 rows)
+
+-- D12
+SELECT * FROM best_match_query(ARRAY['apple','mads', 'adam']) LIMIT 10;
+   tconst   | rank |                      title                      
+------------+------+-------------------------------------------------
+ tt0418455  |    3 | Adam's Apples
+ tt3421074  |    2 | Skull Kid: A Zelda Legend
+ tt5862454  |    2 | Winter Thaw
+ tt1928116  |    2 | Assassin's Creed: Revelations
+ tt32085824 |    2 | Ildkys
+ tt3498756  |    2 | Malory & Nicole
+ tt10055344 |    2 | NXT TakeOver: New York
+ tt4796414  |    2 | A Bond for Life: How James Bond Changed My Life
+ tt3142716  |    2 | The Daydreamer
+ tt9662282  |    2 | Skagerrak
+(10 rows)
+
+-- D13
+SELECT * FROM word_to_words_query(ARRAY['harry', 'potter', 'wand', 'magic']) LIMIT 10;
+  word   | frequency 
+---------+-----------
+ harry   |      1294
+ magic   |       524
+ self    |       416
+ james   |       326
+ david   |       316
+ michael |       301
+ potter  |       285
+ john    |       271
+ life    |       252
+ one     |       249
+(10 rows)
+

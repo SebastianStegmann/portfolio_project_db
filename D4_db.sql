@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION structured_string_search(
     person_text TEXT,
     p_id BIGINT
 ) RETURNS TABLE (
-    tconst CHAR(10),
+    tconst VARCHAR(10),
     primarytitle TEXT
 ) AS $$
 BEGIN

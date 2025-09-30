@@ -37,12 +37,12 @@ BEGIN
     END IF;
 
     RETURN QUERY SELECT 'Success';
-EXCEPTION
-    WHEN foreign_key_violation THEN
-        RETURN QUERY SELECT 'Error: Invalid user or title ID';
-    WHEN check_violation THEN
-        RETURN QUERY SELECT 'Error: Rating must be between 1 and 10';
-    WHEN others THEN
-        RETURN QUERY SELECT 'Error: Rating failed - ' || SQLERRM;
+-- EXCEPTION
+--     WHEN foreign_key_violation THEN
+--         RETURN QUERY SELECT 'Error: Invalid user or title ID';
+--     WHEN check_violation THEN
+--         RETURN QUERY SELECT 'Error: Rating must be between 1 and 10';
+--     WHEN others THEN
+--         RETURN QUERY SELECT 'Error: Rating failed - ' || SQLERRM;
 END;
 $$ LANGUAGE plpgsql;
